@@ -12,8 +12,38 @@ const express = require('express');
 const app = express();
 const config = require("./config.json");
 const prefix = config.prefix;
+const Music = require("./musicbot.js");
 
-client.login(process.env.SECRET);
+const ytdl = require('ytdl-core');
+const {YTSearcher} = require('ytsearcher');
+const ypi = require('youtube-playlist-info');
+const PACKAGE = require('./package.json');
+
+
+Music.start(client, {
+  youtubeKey: "AIzaSyBGvyiGVy0uY7i25DynAyf8NngN5__JDFw",
+  prefix: "alexa ", // Prefix for the commands.
+  global: true,            // Non-server-specific queues.
+  maxQueueSize: 10,        // Maximum queue size of 25.
+  clearInvoker: false,      // If permissions applicable, allow the bot to delete the messages that invoke it.
+  helpCmd: 'mhelp',        // Sets the name for the help command.
+  playCmd: 'play',        // Sets the name for the 'play' command.
+  volumeCmd: 'adjust',     // Sets the name for the 'volume' command.
+  leaveCmd: 'yeet',      // Sets the name for the 'leave' command.
+  disableLoop: false,        // Disable the loop command.
+  anyoneCanAdjust: true,
+  anyoneCanSkip: true,
+  anyoneCanLeave: true,
+  anyoneCanPause: true,
+  enableQueueStat: true,
+  disableSet: true,
+  disablePause: true,
+  disableResume: true
+});
+
+
+client.login(process.env.TOKEN);
+
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
   response.sendStatus(200);
@@ -43,7 +73,7 @@ client.on("message", (message) => {
      message.channel.send(`${yeet}`);
     } else
     if (msg.includes("alexa")){
-     message.channel.send("https://www.youtube.com/watch?v=40qJapBsOp4");
+     //message.channel.send("https://www.youtube.com/watch?v=40qJapBsOp4");
     } 
   }
   
@@ -66,7 +96,7 @@ client.on("message", (message) => {
     message.react("485106980038639627");
     break;
   case "blah" :
-    message.channel.send('Meh.');
+    //message.channel.send('Meh.');
     break;
   case "rules":
     const embed = new Discord.RichEmbed()
@@ -87,3 +117,17 @@ to get them sweet sweet embers! (admins will keep track of the log so anyone who
     break;
   }  
 });
+
+
+
+/*
+ * Original code from nexu-dev, https://github.com/nexu-dev/discord.js-client
+ * Newly edited by Darko Pendragon (Demise).
+ * Other Credits:
+ * - Erik Rodabaugh.
+ * - mcao.
+ * - Naz (BluSpring).
+ * - MatthewJ217.
+ */
+
+
