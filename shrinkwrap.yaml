@@ -5,8 +5,10 @@ dependencies:
   express: 4.16.3
   ffmpeg: 0.0.4
   ffmpeg-binaries: 4.0.0
+  libsodium-wrappers: 0.7.3
   node-opus: 0.3.0
   simple-youtube-api: 5.0.2
+  sodium: 2.0.3
   youtube-dl: 1.12.2
   ytdl-core: 0.24.0
 packages:
@@ -1012,6 +1014,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GsCSexFADNQUr8T5HPJvayTjvPIfoyJPtLQBwn5a4WZQchcrPMPMAWcC1AzJVRDKyD6ZPROPAxgv6rfHViO4uQ==
+  /libsodium-wrappers/0.7.3:
+    dependencies:
+      libsodium: 0.7.3
+    dev: false
+    resolution:
+      integrity: sha512-dw5Jh6TZ5qc5rQVZe3JrSO/J05CE+DmAPnqD7Q2glBUE969xZ6o3fchnUxyPlp6ss3x0MFxmdJntveFN+XTg1g==
+  /libsodium/0.7.3:
+    dev: false
+    resolution:
+      integrity: sha512-ld+deUNqSsZYbAobUs63UyduPq8ICp/Ul/5lbvBIYpuSNWpPRU0PIxbW+xXipVZtuopR6fIz9e0tTnNuPMNeqw==
   /lodash.noop/3.0.1:
     dev: false
     resolution:
@@ -1605,6 +1617,13 @@ packages:
       node: '>=0.8.0'
     resolution:
       integrity: sha1-ZUEYTMkK7qbG57NeJlkIJEPGYZg=
+  /sodium/2.0.3:
+    dependencies:
+      nan: 2.11.0
+    dev: false
+    requiresBuild: true
+    resolution:
+      integrity: sha512-/z1tdOf+tn+MZr6uiKno709w2V5LwqukNWxOWi6NiSBia5E7Fp33f3CUHtCIR2184DEylytXdTZNryQUQwNKkQ==
   /sshpk/1.14.2:
     dependencies:
       asn1: 0.2.4
@@ -1912,7 +1931,9 @@ specifiers:
   express: ^4.16.3
   ffmpeg: ^0.0.4
   ffmpeg-binaries: ^4.0.0
+  libsodium-wrappers: ^0.7.3
   node-opus: ^0.3.0
   simple-youtube-api: ^5.0.2
+  sodium: ^2.0.3
   youtube-dl: ^1.12.2
   ytdl-core: ^0.24.0

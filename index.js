@@ -14,6 +14,7 @@ const config = require("./config.json");
 const prefix = config.prefix;
 const Music = require("./musicbot.js");
 
+
 const ytdl = require('ytdl-core');
 const {YTSearcher} = require('ytsearcher');
 const ypi = require('youtube-playlist-info');
@@ -21,10 +22,10 @@ const PACKAGE = require('./package.json');
 
 
 Music.start(client, {
-  youtubeKey: "AIzaSyBGvyiGVy0uY7i25DynAyf8NngN5__JDFw",
+  youtubeKey: process.env.YOUTUBE,
   prefix: "alexa ", // Prefix for the commands.
   global: true,            // Non-server-specific queues.
-  maxQueueSize: 10,        // Maximum queue size of 25.
+  maxQueueSize: 200,        // Maximum queue size of 25.
   clearInvoker: false,      // If permissions applicable, allow the bot to delete the messages that invoke it.
   helpCmd: 'mhelp',        // Sets the name for the help command.
   playCmd: 'play',        // Sets the name for the 'play' command.
@@ -43,6 +44,13 @@ Music.start(client, {
 
 
 client.login(process.env.TOKEN);
+client.on("ready", () => {
+//  client.user.setActivity(`on ${client.guilds.size} servers`);
+  client.user.setActivity((`Food Fantasy for ${client.users.size} users`), { type: 'STREAMING' , url: "https://www.twitch.tv/sengjung123" })
+  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
+  .catch(console.error);
+  console.log(`Ready to serve on ${client.guilds.size} servers, for ${client.users.size} users.`);
+});
 
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
@@ -50,11 +58,10 @@ app.get("/", (request, response) => {
 });
 app.listen(process.env.PORT);
 setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
-client.on("ready", () => {
-  console.log("I am ready!");
-});
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`)
+  .then(client.user.setActivity((`Food Fantasy for ${client.users.size} users`), { type: 'STREAMING' , url: "https://www.twitch.tv/sengjung123" }))
+  .then(console.log(Date.now() + " Ping Sent"));
+}, 280000)
 
 
 
@@ -73,7 +80,16 @@ client.on("message", (message) => {
      message.channel.send(`${yeet}`);
     } else
     if (msg.includes("alexa")){
-     //message.channel.send("https://www.youtube.com/watch?v=40qJapBsOp4");
+      if (msg.includes("can you")){
+        if (msg.includes("yeet")){
+          const yeet = client.emojis.get("485106980038639627");
+          message.channel.send("I don't know " + message.author.toString() + ", can you? "+ `${yeet}`);}
+        else {
+          const dab = client.emojis.get("485105183454527492");
+          message.channel.send("I don't know " + message.author.toString() + ", can you? "+ `${dab}`);}}
+      else if (msg.includes("will you")){
+        message.cchannel.send("I don't know" + message.author.toString() + ", will you?");}
+     //message.channel.send("https://www.youtube.com/watch?v=40qJapBsOp4");  old alexa code
     } 
   }
   
@@ -81,7 +97,9 @@ client.on("message", (message) => {
   const command = args.shift().toLowerCase()
   switch (command) {
   case "unzips" :
-    message.channel.send("uwu whats this?");
+    message.channel.send("uwu whats this?")
+    .then(message.channel.send("*nuzzles*"))
+    .catch(console.error);
     break;
   case "hewwo" :
     message.channel.send("owo whats this?");
@@ -96,9 +114,11 @@ client.on("message", (message) => {
     message.react("485106980038639627");
     break;
   case "blah" :
+    //message.channel.send("Hello " + message.author.toString() + ", and welcome!")
     //message.channel.send('Meh.');
     break;
   case "rules":
+    if (message.author.id !== '787274481071595521') break;
     const embed = new Discord.RichEmbed()
       .setTitle("Here's a link to our discord server")
       .setURL("https://discord.gg/nBqE3AM")
@@ -117,17 +137,3 @@ to get them sweet sweet embers! (admins will keep track of the log so anyone who
     break;
   }  
 });
-
-
-
-/*
- * Original code from nexu-dev, https://github.com/nexu-dev/discord.js-client
- * Newly edited by Darko Pendragon (Demise).
- * Other Credits:
- * - Erik Rodabaugh.
- * - mcao.
- * - Naz (BluSpring).
- * - MatthewJ217.
- */
-
-
