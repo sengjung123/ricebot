@@ -1354,14 +1354,32 @@ exports.start = (client, options) => {
                   console.error(`[${msg.guild.name}] [npCmd] ` + e.stack);
                 };
               } else {
+                const embed = new Discord.RichEmbed();
                 try {
+                  embed.setAuthor('Adding To Queue', client.user.avatarURL);
                   var songTitle = result.title.replace(/\\/g, '\\\\')
                     .replace(/\`/g, '\\`')
                     .replace(/\*/g, '\\*')
                     .replace(/_/g, '\\_')
                     .replace(/~/g, '\\~')
                     .replace(/`/g, '\\`');
-                  msg.channel.send(`Now Playing: **${songTitle}**\nRequested By: ${client.users.get(result.requester).username}\nQueued On: ${result.queuedOn}`)
+                  embed.setColor(musicbot.embedColor);
+                  embed.addField(result.channelTitle, `[${songTitle}](${result.url})`, musicbot.inlineEmbeds);
+                  embed.addField("Queued On", result.queuedOn, musicbot.inlineEmbeds);
+                  embed.setThumbnail(result.thumbnails.high.url);
+                  const resMem = client.users.get(result.requester);
+                  if (musicbot.requesterName && resMem) embed.setFooter(`Requested by ${client.users.get(result.requester).username}`, result.requesterAvatarURL);
+                  if (musicbot.requesterName && !resMem) embed.setFooter(`Requested by \`UnknownUser (ID: ${result.requester})\``, result.requesterAvatarURL);
+                  msg.channel.send({
+                    embed
+                  });
+                  //var songTitle = result.title.replace(/\\/g, '\\\\')
+                  //  .replace(/\`/g, '\\`')
+                 //   .replace(/\*/g, '\\*')
+                 //   .replace(/_/g, '\\_')
+                 //   .replace(/~/g, '\\~')
+                 //   .replace(/`/g, '\\`');
+                 // msg.channel.send(`Now Playing: **${songTitle}**\nRequested By: ${client.users.get(result.requester).username}\nQueued On: ${result.queuedOn}`)
                 } catch (e) {
                   console.error(`[${msg.guild.name}] [npCmd] ` + e.stack);
                 };
@@ -2127,9 +2145,9 @@ exports.start = (client, options) => {
               const wew = musicbot.queues.get(msg.guild.id);
               if (re !== video && wew.loop == 'none') musicbot.np(msg);
             }).catch((res) => {
-              //msg.channel.send(musicbot.note('fail', 'Error occoured, try again!'));
-              
-              return console.error(new Error("Dispatcher SetLast: " + res));
+              musicbot.np(msg);
+              //msg.channel.send(musicbot.note('fail', 'Error occoured, no server queue, try again!'));
+              //return console.error(new Error("Dispatcher SetLast: " + res));
             })
           }).catch((response) => {
             if (response) {

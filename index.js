@@ -31,7 +31,8 @@ Music.start(client, {
   playCmd: 'play',        // Sets the name for the 'play' command.
   volumeCmd: 'adjust',     // Sets the name for the 'volume' command.
   leaveCmd: 'yeet',      // Sets the name for the 'leave' command.
-  disableLoop: false,        // Disable the loop command.
+  leaveAlt: ["leave", "skip"],
+  disableLoop: true,        // Disable the loop command.
   anyoneCanAdjust: true,
   anyoneCanSkip: true,
   anyoneCanLeave: true,
@@ -60,8 +61,6 @@ app.get("/", (request, response) => {
 app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`)
-  .then(client.user.setActivity((`Food Fantasy for ${client.users.size} users`), { type: 'STREAMING' , url: "https://www.twitch.tv/sengjung123" }))
-  .then(console.log(Date.now() + " Ping Sent"));
 }, 280000)
 
 
@@ -89,7 +88,7 @@ client.on("message", (message) => {
           const dab = client.emojis.get("485105183454527492");
           message.channel.send("I don't know " + message.author.toString() + ", can you? "+ `${dab}`);}}
       else if (msg.includes("will you")){
-        message.channel.send("I don't know" + message.author.toString() + ", will you?");}
+        message.channel.send("I don't know " + message.author.toString() + ", will you?");}
      //message.channel.send("https://www.youtube.com/watch?v=40qJapBsOp4");  old alexa code
     } 
   }
