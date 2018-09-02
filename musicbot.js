@@ -1303,7 +1303,7 @@ exports.start = (client, options) => {
               if (video.resourceId.kind == 'youtube#video') {
                 if (!video.url) video.url = `https://www.youtube.com/watch?v=` + video.resourceId.videoId;
                 video.requester = msg.author.id;
-                video.queuedOn = new Date().toLocaleDateString(musicbot.dateLocal, { weekday: 'long', hour: 'numeric' });
+                video.queuedOn = new Date().toLocaleDateString(musicbot.dateLocal, { timeZone: 'asia/singapore', weekday: 'long', hour: 'numeric' });
                 if (musicbot.requesterName) video.requesterAvatarURL = msg.author.displayAvatarURL;
                 queue.songs.push(video);
                 if (queue.songs.length === 1) musicbot.executeQueue(msg, queue);
@@ -1325,7 +1325,7 @@ exports.start = (client, options) => {
               var result = searchResult.first;
               result.requester = msg.author.id;
               result.channelURL = `https://www.youtube.com/channel/${result.channelId}`;
-              result.queuedOn = new Date().toLocaleDateString(musicbot.dateLocal, { weekday: 'long', hour: 'numeric' });
+              result.queuedOn = new Date().toLocaleDateString(musicbot.dateLocal, {timeZone: 'asia/singapore', weekday: 'long', hour: 'numeric', minute: 'numeric'});
               if (musicbot.requesterName) result.requesterAvatarURL = msg.author.displayAvatarURL;
               queue.songs.push(result);
 
@@ -1566,7 +1566,7 @@ exports.start = (client, options) => {
               result.requester = msg.author.id;
               if (musicbot.requesterName) result.requesterAvatarURL = msg.author.displayAvatarURL;
               result.channelURL = `https://www.youtube.com/channel/${result.channelId}`;
-              result.queuedOn = new Date().toLocaleDateString(musicbot.dateLocal, { weekday: 'long', hour: 'numeric' });
+              result.queuedOn = new Date().toLocaleDateString(musicbot.dateLocal, { timeZone: 'asia/singapore', weekday: 'long', hour: 'numeric' });
               videos.push(result);
               if (i === max) {
                 i = 101;
@@ -1891,7 +1891,7 @@ exports.start = (client, options) => {
       if (!voiceConnection.player.dispatcher) return;
       voiceConnection.player.dispatcher.end();
       voiceConnection.disconnect();
-      msg.channel.send(musicbot.note('note', 'Successfully left your voice channel!'));
+      msg.channel.send(musicbot.note('note', 'Successfully yeeted!'));
 
       setTimeout(() => {
         let vc = client.voiceConnections.find(val => val.channel.guild.id == msg.guild.id);
