@@ -3,7 +3,7 @@
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
   "name": "ricebot",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A private bot for the Food Fantasy guild Meme Team.",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "node-opus": "^0.3.0",
     "simple-youtube-api": "^5.0.2",
     "youtube-dl": "^1.12.2",
-    "ytdl-core": "^0.24.0",
+    "ytdl-core": "^0.24.1",
     "sodium": "^2.0.3",
     "libsodium-wrappers": "^0.7.3"
   },

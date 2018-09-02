@@ -45,8 +45,9 @@ Music.start(client, {
 
 client.login(process.env.TOKEN);
 client.on("ready", () => {
+  client.user.setStatus("online")
 //  client.user.setActivity(`on ${client.guilds.size} servers`);
-  client.user.setActivity((`Food Fantasy for ${client.users.size} users`), { type: 'STREAMING' , url: "https://www.twitch.tv/sengjung123" })
+  .then(client.user.setActivity((`Food Fantasy for ${client.users.size} users`), { type: 'STREAMING' , url: "https://www.twitch.tv/sengjung123" }))
   .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
   .catch(console.error);
   console.log(`Ready to serve on ${client.guilds.size} servers, for ${client.users.size} users.`);
@@ -88,7 +89,7 @@ client.on("message", (message) => {
           const dab = client.emojis.get("485105183454527492");
           message.channel.send("I don't know " + message.author.toString() + ", can you? "+ `${dab}`);}}
       else if (msg.includes("will you")){
-        message.cchannel.send("I don't know" + message.author.toString() + ", will you?");}
+        message.channel.send("I don't know" + message.author.toString() + ", will you?");}
      //message.channel.send("https://www.youtube.com/watch?v=40qJapBsOp4");  old alexa code
     } 
   }
@@ -97,8 +98,9 @@ client.on("message", (message) => {
   const command = args.shift().toLowerCase()
   switch (command) {
   case "unzips" :
+    let unzip = args.join(' ');
     message.channel.send("uwu whats this?")
-    .then(message.channel.send("*nuzzles*"))
+    .then(message.channel.send(`*nuzzles ${unzip}*`))
     .catch(console.error);
     break;
   case "hewwo" :
