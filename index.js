@@ -40,7 +40,10 @@ Music.start(client, {
   enableQueueStat: true,
   disableSet: true,
   disablePause: true,
-  disableResume: true
+  disableResume: true,
+  requesterName: true,
+  botOwner: process.env.SENGJUNG123,
+  botAdmins: [process.env.BLOODYRUKIA,process.env.KOSPLAISE,process.env.NIHILISTSALT]
 });
 
 
@@ -60,7 +63,9 @@ app.get("/", (request, response) => {
 });
 app.listen(process.env.PORT);
 setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`)
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+  console.log(Date.now() + " Updated");
+  client.user.setActivity((`Food Fantasy for ${client.users.size} users`), { type: 'STREAMING' , url: "https://www.twitch.tv/sengjung123" })
 }, 280000)
 
 
