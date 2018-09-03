@@ -14,7 +14,6 @@ const config = require("./config.json");
 const prefix = config.prefix;
 const Music = require("./musicbot.js");
 
-
 const ytdl = require('ytdl-core');
 const {YTSearcher} = require('ytsearcher');
 const ypi = require('youtube-playlist-info');
@@ -119,9 +118,40 @@ client.on("message", (message) => {
   case "empty" :
     message.react("485106980038639627");
     break;
-  case "blah" :
+  case "ember" :
+    let a = false;
+    message.channel.send("Master Attendant?");
+    const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 10000 });
+    //console.log(collector)
+    collector.on('collect', message => {
+      if (message.content.toLowerCase().includes("yes ricey") && !a) {
+        message.channel.send("Saving embers?");
+        const collector2 = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 10000 })
+        a=true;
+        //console.log(collector2)
+        collector2.on('collect', message => {
+          if (message.content.toLowerCase().includes("yes ricey")) {
+            message.channel.send("Telling lies?");
+            const collector3 = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 10000 })
+            a=false;
+            //console.log(collector3)
+            collector3.on('collect', message => {
+              if (message.content.toLowerCase().includes("no ricey")) {
+                message.channel.send("Open vault.");
+                const collector4 = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 10000 })
+                //console.log(collector4)
+                collector4.on('collect', message => {
+                  if ((message.content.toLowerCase().includes("hahaha") || message.content.toLowerCase().includes("ha ha ha"))) {
+                    const feelsOk = client.emojis.get("486158890053140505");
+                    message.channel.send(`${feelsOk}`);
+                } else if (!message.content.toLowerCase().includes("hahaha" || "ha ha ha")) {
+                    const feelsBad = client.emojis.get("486157852277342208");
+                    message.channel.send(`${feelsBad}`);
+            }})
+          }})
+        }})
+      }})
     //message.channel.send("Hello " + message.author.toString() + ", and welcome!")
-    //message.channel.send('Meh.');
     break;
   case "rules":
     if (message.author.id !== '787274481071595521') break;

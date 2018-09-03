@@ -3,7 +3,7 @@
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
   "name": "ricebot",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "A private bot for the Food Fantasy guild Meme Team.",
   "main": "index.js",
   "scripts": {
