@@ -103,7 +103,7 @@ client.on("message", (message) => {
   case "unzips" :
     let unzip = args.join(' ');
     message.channel.send("uwu whats this?")
-    .then(message.channel.send(`*nuzzles ${unzip}*`))
+    .then(message.channel.send(`*nuzzles* *${unzip}*`))
     .catch(console.error);
     break;
   case "hewwo" :
