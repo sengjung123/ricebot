@@ -20,6 +20,7 @@ const ypi = require('youtube-playlist-info');
 const PACKAGE = require('./package.json');
 
 
+
 Music.start(client, {
   youtubeKey: process.env.YOUTUBE,
   prefix: "alexa ", // Prefix for the commands.
@@ -57,7 +58,7 @@ client.on("ready", () => {
 });
 
 app.get("/", (request, response) => {
-  console.log(Date.now() + " Ping Received");
+  console.log(Date().toLocaleString('en-US', { timeZone: 'asia/singapore' }) + " Ping Received");
   response.sendStatus(200);
 });
 app.listen(process.env.PORT);
@@ -66,6 +67,53 @@ setInterval(() => {
   console.log(Date.now() + " Updated");
   client.user.setActivity((`Food Fantasy for ${client.users.size} users`), { type: 'STREAMING' , url: "https://www.twitch.tv/sengjung123" })
 }, 280000)
+
+//ricebot phones home because he's hungwy uwu
+var ffLunch = false; //lunch is at 4
+var ffDinner = false; //dinner is at 10
+var ffSupper = false; //supper is at 13
+var ffPublic1 = false; //17
+var ffPublic2 = false; //1
+var ffPublic3 = false; //5
+var ffDisaster = false; //0
+//all times are in UTC
+setInterval(() => {
+  const ffTime = new Date();
+  if ( ffTime.getHours() === 4 && !ffLunch) {
+    client.channels.get("485807198857855006").send("Hewwo @everyone pwease remember to get your Omuricey lunchies!");
+    ffLunch = true;
+  }
+  if ( ffTime.getHours() === 10 && !ffDinner) {
+    client.channels.get("485807198857855006").send("Din-dins are served @everyone, don't forget to get your Garlic Lobsters owo");
+    ffDinner = true;
+  }
+  if ( ffTime.getHours() === 13 && !ffSupper) {
+    client.channels.get("485807198857855006").send("Supper! @everyone uwu pwease remember to get your Mango Wrappies before they expire.");
+    ffSupper = true;
+  }
+  if ( ffTime.getHours() === 17 && !ffPublic1) {
+    client.channels.get("485807198857855006").send("Hewwo @everyone Public Orders are up!");
+    ffPublic1 = true;
+  }
+  if ( ffTime.getHours() === 1 && !ffPublic2) {
+    client.channels.get("485807198857855006").send("Hewwo @everyone Public Orders are up!");
+    ffPublic2 = true;
+  }
+  if ( ffTime.getHours() === 5 && !ffPublic3) {
+    client.channels.get("485807198857855006").send("Hewwo @everyone Public Orders are up!");
+    ffPublic3 = true;
+  }
+  if ( ffTime.getHours() === 0) {
+    ffLunch = false;
+    ffSupper = false;
+    ffDinner = false;
+    ffPublic1 = false;
+    ffPublic2 = false;
+    ffPublic3 = false;
+  }
+}, 1000)
+
+
 
 
 
