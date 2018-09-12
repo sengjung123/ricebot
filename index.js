@@ -72,10 +72,10 @@ setInterval(() => {
 var ffLunch = false; //lunch is at 4
 var ffDinner = false; //dinner is at 10
 var ffSupper = false; //supper is at 13
-var ffPublic1 = false; //17
-var ffPublic2 = false; //1
-var ffPublic3 = false; //5
-var ffDisaster = false; //0
+var ffPublic1 = false; //Public order 1 is at 17
+var ffPublic2 = false; //Public order 1 is at 1
+var ffPublic3 = false; //Public order 1 is at 5
+var ffDisaster = false; //Disaster/reset is at 0
 //all times are in UTC
 setInterval(() => {
   const ffTime = new Date();
@@ -103,6 +103,7 @@ setInterval(() => {
     client.channels.get("485807198857855006").send("Hewwo @everyone Public Orders are up!");
     ffPublic3 = true;
   }
+  //resets the above at server reset time
   if ( ffTime.getHours() === 0) {
     ffLunch = false;
     ffSupper = false;
@@ -113,6 +114,7 @@ setInterval(() => {
   }
 }, 1000)
 
+//if it comes out with errors increase interval time
 
 
 
