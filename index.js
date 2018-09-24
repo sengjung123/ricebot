@@ -216,9 +216,9 @@ client.on("message", (message) => {
       {
          isReady = false;
          var voiceChannel = message.member.voiceChannel;
-         if (!voiceChannel)
-            isReady = true;
-            return message.reply("You must be in a voice channel to use this command.");
+         //if (!voiceChannel)
+         //   isReady = true;
+         //   return message.reply("You must be in a voice channel to use this command.");
          try{
             voiceChannel.join().then(connection =>
             {  
@@ -233,17 +233,19 @@ client.on("message", (message) => {
         {
           console.log(e);
           voiceChannel = undefined;
-        isReady = true;
-      }}
+          isReady = true;
+      }
+      isReady = true;
+      }
     break;
   case "foodsoul" :
       if (isReady)
       {
         isReady = false;
         var voiceChannel = message.member.voiceChannel;
-        if (!voiceChannel)
-            isReady = true;
-            return message.reply("You must be in a voice channel to use this command.");
+        //if (!voiceChannel)
+        //    isReady = true;
+        //    return message.reply("You must be in a voice channel to use this command.");
         try{
           voiceChannel.join().then(connection =>
           {  
@@ -259,7 +261,9 @@ client.on("message", (message) => {
           console.log(e);
           voiceChannel = undefined;
         isReady = true;
-      }}
+      }
+        isReady = true;
+      }
     break;
   case "ember" :
     let a = false;
