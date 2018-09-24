@@ -20,6 +20,43 @@ const ypi = require('youtube-playlist-info');
 const PACKAGE = require('./package.json');
 
 
+var fs = require('fs');
+
+var router = express.Router();
+var content = fs.readFileSync('.glitch-assets', 'utf8');
+var rows = content.split("\n");
+var assets = rows.map((row) => {
+  try {
+    return JSON.parse(row);
+  } catch (e) {}
+});
+assets = assets.filter((asset) => asset);
+
+// Example url
+// https://cdn.gomix.com/us-east-1%3A1a0f89c8-26bf-4073-baed-2b409695e959%2Ffoobar.png
+
+router.use((request, response) => {
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header("Access-Control-Allow-Methods", "GET");
+  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  
+  var path = request.path.substring(1);
+  
+  var [matching] = assets.filter((asset) => {
+    if(asset.name)
+      return asset.name.replace(/ /g,'%20') === path;
+  });
+  
+  if (!matching || !matching.url) {
+    return response.status(404).end("No such file");
+  }
+  
+  return response.redirect(matching.url);
+});
+
+module.exports = router;
+
+var isReady = true;
 
 Music.start(client, {
   youtubeKey: process.env.YOUTUBE,
@@ -31,6 +68,7 @@ Music.start(client, {
   playCmd: 'play',        // Sets the name for the 'play' command.
   volumeCmd: 'adjust',     // Sets the name for the 'volume' command.
   leaveCmd: 'yeet',      // Sets the name for the 'leave' command.
+  ownerCmd: 'owner',
   leaveAlt: ["leave", "skip"],
   disableLoop: true,        // Disable the loop command.
   anyoneCanAdjust: true,
@@ -38,6 +76,8 @@ Music.start(client, {
   anyoneCanLeave: true,
   anyoneCanPause: true,
   enableQueueStat: true,
+  disableClear: true,
+  disableLoop: true,
   disableSet: true,
   disablePause: true,
   disableResume: true,
@@ -58,13 +98,13 @@ client.on("ready", () => {
 });
 
 app.get("/", (request, response) => {
-  console.log(Date().toLocaleString('en-US', { timeZone: 'asia/singapore' }) + " Ping Received");
+  console.log((Date().toLocaleString('en-US', { timeZone: 'asia/singapore' })) + " Ping Received");
   response.sendStatus(200);
 });
 app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-  console.log(Date.now() + " Updated");
+  console.log((Date().toLocaleString('en-US', { timeZone: 'asia/singapore' })) + " Updated");
   client.user.setActivity((`Food Fantasy for ${client.users.size} users`), { type: 'STREAMING' , url: "https://www.twitch.tv/sengjung123" })
 }, 280000)
 
@@ -80,28 +120,28 @@ var ffDisaster = false; //Disaster/reset is at 0
 setInterval(() => {
   const ffTime = new Date();
   if ( ffTime.getHours() === 4 && !ffLunch) {
-    client.channels.get("485807198857855006").send("Hewwo @everyone pwease remember to get your Omuricey lunchies!");
     ffLunch = true;
+    client.channels.get("485807198857855006").send("Hewwo @everyone pwease remember to get your Omuricey lunchies!");
   }
   if ( ffTime.getHours() === 10 && !ffDinner) {
-    client.channels.get("485807198857855006").send("Din-dins are served @everyone, don't forget to get your Garlic Lobsters owo");
     ffDinner = true;
+    client.channels.get("485807198857855006").send("Din-dins are served @everyone, don't forget to get your Garlic Lobsters owo");
   }
   if ( ffTime.getHours() === 13 && !ffSupper) {
-    client.channels.get("485807198857855006").send("Supper! @everyone uwu pwease remember to get your Mango Wrappies before they expire.");
     ffSupper = true;
+    client.channels.get("485807198857855006").send("Supper! @everyone uwu pwease remember to get your Mango Wrappies before they expire.");
   }
   if ( ffTime.getHours() === 17 && !ffPublic1) {
-    client.channels.get("485807198857855006").send("Hewwo @everyone Public Orders are up!");
     ffPublic1 = true;
+    client.channels.get("485807198857855006").send("H-hewwo? @everyone Pubwic Orders are up uwu");
   }
   if ( ffTime.getHours() === 1 && !ffPublic2) {
-    client.channels.get("485807198857855006").send("Hewwo @everyone Public Orders are up!");
     ffPublic2 = true;
+    client.channels.get("485807198857855006").send("H-hewwo? @everyone Pubwic Orders are up uwu");
   }
   if ( ffTime.getHours() === 5 && !ffPublic3) {
-    client.channels.get("485807198857855006").send("Hewwo @everyone Public Orders are up!");
     ffPublic3 = true;
+    client.channels.get("485807198857855006").send("H-hewwo? @everyone Pubwic Orders are up uwu");
   }
   //resets the above at server reset time
   if ( ffTime.getHours() === 0) {
@@ -112,7 +152,7 @@ setInterval(() => {
     ffPublic2 = false;
     ffPublic3 = false;
   }
-}, 1000)
+}, 3000)
 
 //if it comes out with errors increase interval time
 
@@ -128,6 +168,9 @@ client.on("message", (message) => {
     } else
     if (msg.startsWith("henlo")){
       message.channel.send("Henlo it's mi Rice Bot uwu");
+    } else
+    if (msg.includes("ligma")){
+     message.channel.send("What's ligma?");
     } else
     if (msg.includes("empty")){
      const yeet = client.emojis.get("485106980038639627");
@@ -167,6 +210,56 @@ client.on("message", (message) => {
     break;
   case "empty" :
     message.react("485106980038639627");
+    break;
+  case "rice" :
+    if (isReady)
+      {
+         isReady = false;
+         var voiceChannel = message.member.voiceChannel;
+         if (!voiceChannel)
+            isReady = true;
+            return message.reply("You must be in a voice channel to use this command.");
+         try{
+            voiceChannel.join().then(connection =>
+            {  
+              var playSound = connection;
+              var dispatcher = playSound.playFile('./audio/hiimrice.mp3');
+              dispatcher.on("end", end => {
+                try {voiceChannel.leave();; }catch(e){ console.log(e); }
+                voiceChannel = undefined;
+            });
+          });
+        }catch(e)
+        {
+          console.log(e);
+          voiceChannel = undefined;
+        isReady = true;
+      }}
+    break;
+  case "foodsoul" :
+      if (isReady)
+      {
+        isReady = false;
+        var voiceChannel = message.member.voiceChannel;
+        if (!voiceChannel)
+            isReady = true;
+            return message.reply("You must be in a voice channel to use this command.");
+        try{
+          voiceChannel.join().then(connection =>
+          {  
+            var playSound = connection;
+            var dispatcher = playSound.playFile('./audio/foodsoul.mp3');
+            dispatcher.on("end", end => {
+               try {voiceChannel.leave();; }catch(e){ console.log(e); }
+               voiceChannel = undefined;
+           });
+         });
+        }catch(e)
+        {
+          console.log(e);
+          voiceChannel = undefined;
+        isReady = true;
+      }}
     break;
   case "ember" :
     let a = false;
