@@ -176,6 +176,60 @@ client.on("message", (message) => {
      const yeet = client.emojis.get("485106980038639627");
      message.channel.send(`${yeet}`);
     } else
+    if (msg.includes("this is so sad")){
+      if (isReady)
+      {
+        isReady = false;
+        var voiceChannel = message.member.voiceChannel;
+        //if (!voiceChannel)
+        //    isReady = true;
+        //    return message.reply("You must be in a voice channel to use this command.");
+        try{
+          voiceChannel.join().then(connection =>
+          {  
+            var playSound = connection;
+            var dispatcher = playSound.playFile('./audio/despacitojp.mp3');
+            dispatcher.on("end", end => {
+               try {voiceChannel.leave();; }catch(e){ console.log(e); }
+               voiceChannel = undefined;
+           });
+         });
+        }catch(e)
+        {
+          console.log(e);
+          voiceChannel = undefined;
+        isReady = true;
+      }
+        isReady = true;
+      }
+    } else
+    if (msg.startsWith("and i say")){
+      if (isReady)
+      {
+        isReady = false;
+        var voiceChannel = message.member.voiceChannel;
+        //if (!voiceChannel)
+        //    isReady = true;
+        //    return message.reply("You must be in a voice channel to use this command.");
+        try{
+          voiceChannel.join().then(connection =>
+          {  
+            var playSound = connection;
+            var dispatcher = playSound.playFile('./audio/heyyeayeayea.mp3');
+            dispatcher.on("end", end => {
+               try {voiceChannel.leave();; }catch(e){ console.log(e); }
+               voiceChannel = undefined;
+           });
+         });
+        }catch(e)
+        {
+          console.log(e);
+          voiceChannel = undefined;
+        isReady = true;
+      }
+        isReady = true;
+      }
+    } else
     if (msg.includes("alexa")){
       if (msg.includes("can you")){
         if (msg.includes("yeet")){
