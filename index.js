@@ -244,6 +244,7 @@ client.on("message", (message) => {
     } 
   }
   
+  else if (message.content.startsWith(prefix)) {
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase()
   switch (command) {
@@ -373,4 +374,4 @@ to get them sweet sweet embers! (admins will keep track of the log so anyone who
       message.channel.send({ embed });
     break;
   }  
-});
+}});
