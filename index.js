@@ -274,8 +274,10 @@ client.on("message", (message) => {
               var playSound = connection;
               var dispatcher = playSound.playFile('./audio/suckadick.mp3');
               dispatcher.on("end", end => {
-                try {voiceChannel.leave();; }catch(e){ console.log(e); }
-                voiceChannel = undefined;
+                setTimeout(function() {
+                  try {voiceChannel.leave();; }catch(e){ console.log(e); }
+                  voiceChannel = undefined;
+                }, 2000);
             });
           });
         }catch(e)
@@ -349,8 +351,18 @@ client.on("message", (message) => {
       }})
     //message.channel.send("Hello " + message.author.toString() + ", and welcome!")
     break;
+  case "ricesay":
+    if (!message.member.roles.has(process.env.SUPERADMIN) || !message.member.roles.has(process.env.ADMIN)) break;
+	  let [server, ...reply] = args;
+    try {client.channels.find("name", server).send(reply.join(" "));
+         message.react("✅");
+        }catch(e){ console.log(e);};
+    //try {voiceChannel.leave();; }catch(e){ console.log(e); }
+	  //console.log(server);
+	  //console.log(messag.join(" "));
+    break;
   case "rules":
-    if (message.author.id !== '787274481071595521') break;
+    if (!message.member.roles.has(process.env.SUPERADMIN)) break;
     const embed = new Discord.RichEmbed()
       .setTitle("Here's a link to our discord server")
       .setURL("https://discord.gg/nBqE3AM")
