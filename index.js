@@ -352,11 +352,22 @@ client.on("message", (message) => {
     //message.channel.send("Hello " + message.author.toString() + ", and welcome!")
     break;
   case "ricesay":
+    if (message.channel.id !== "485206056012873771"){
+      message.delete(1);
+      break;}
     if (!message.member.roles.has(process.env.SUPERADMIN) || !message.member.roles.has(process.env.ADMIN)) break;
 	  let [server, ...reply] = args;
     try {client.channels.find("name", server).send(reply.join(" "));
-         message.react("✅");
-        }catch(e){ console.log(e);};
+        message.react("💖");
+        }catch(e){ 
+          console.log(e);
+          message.react("❌");
+          (message.channel.send("Invalid command, the format is !ricesay <channel-name> <message>."))
+          .then(msg => {
+            msg.delete(5000)
+            })
+          .catch();
+        };
     //try {voiceChannel.leave();; }catch(e){ console.log(e); }
 	  //console.log(server);
 	  //console.log(messag.join(" "));
