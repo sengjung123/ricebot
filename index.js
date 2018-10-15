@@ -139,6 +139,20 @@ client.on("message", (message) => {
     if (msg.includes("ligma")){
      message.channel.send("What's ligma?");
     } else
+    if (msg=="alexa play despacito"){
+      
+         message.react("🇩").then(() => {
+         message.react("🇪").then(() => {
+         message.react("🇸").then(() => {
+         message.react("🇵").then(() => {
+         message.react("🇦").then(() => {
+         message.react("🇨").then(() => {
+         message.react("🇮").then(() => {
+         message.react("🇹").then(() => {
+         message.react("🇴")
+         })})})})})})})}).catch();
+    }
+    else
     if (msg.includes("empty")){
      const yeet = client.emojis.get("485106980038639627");
      message.channel.send(`${yeet}`);
@@ -352,7 +366,7 @@ client.on("message", (message) => {
     //message.channel.send("Hello " + message.author.toString() + ", and welcome!")
     break;
   case "ricesay":
-    if (message.channel.id !== "485206056012873771"){
+    if (message.channel.id != "485206056012873771"){
       message.delete(1);
       break;}
     if (!message.member.roles.has(process.env.SUPERADMIN) || !message.member.roles.has(process.env.ADMIN)) break;
