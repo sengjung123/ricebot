@@ -88,27 +88,27 @@ setInterval(() => {
   const ffTime = new Date();
   if ( ffTime.getHours() === 4 && !ffLunch) {
     ffLunch = true;
-    client.channels.get("485807198857855006").send("Hewwo @everyone pwease remember to get your Omuricey lunchies!");
+    client.channels.get("557380407780442122").send("Hewwo @pingme pwease remember to get your Omuricey lunchies!");
   }
   if ( ffTime.getHours() === 10 && !ffDinner) {
     ffDinner = true;
-    client.channels.get("485807198857855006").send("Din-dins are served @everyone, don't forget to get your Garlic Lobsters owo");
+    client.channels.get("557380407780442122").send("Din-dins are served @pingme, don't forget to get your Garlic Lobsters owo");
   }
   if ( ffTime.getHours() === 13 && !ffSupper) {
     ffSupper = true;
-    client.channels.get("485807198857855006").send("Supper! @everyone uwu pwease remember to get your Mango Wrappies before they expire.");
+    client.channels.get("557380407780442122").send("Supper! @pingme uwu pwease remember to get your Mango Wrappies before they expire.");
   }
   if ( ffTime.getHours() === 17 && !ffPublic1) {
     ffPublic1 = true;
-    client.channels.get("485807198857855006").send("H-hewwo? @everyone Pubwic Orders are up uwu");
+    client.channels.get("557380407780442122").send("H-hewwo? @pingme Pubwic Orders are up uwu");
   }
   if ( ffTime.getHours() === 1 && !ffPublic2) {
     ffPublic2 = true;
-    client.channels.get("485807198857855006").send("H-hewwo? @everyone Pubwic Orders are up uwu");
+    client.channels.get("557380407780442122").send("H-hewwo? @pingme Pubwic Orders are up uwu");
   }
   if ( ffTime.getHours() === 5 && !ffPublic3) {
     ffPublic3 = true;
-    client.channels.get("485807198857855006").send("H-hewwo? @everyone Pubwic Orders are up uwu");
+    client.channels.get("557380407780442122").send("H-hewwo? @pingme Pubwic Orders are up uwu");
   }
   //resets the above at server reset time
   if ( ffTime.getHours() === 0) {
@@ -123,9 +123,41 @@ setInterval(() => {
 
 //if it comes out with errors increase interval time
 
+function checkUserRole(roleName,message)
+{
+  var role=message.guild.roles.find('name',roleName);
+  if (message.member.roles.has(role.id)){
+    //remove role
+    message.member.removeRole(role.id)
+    message.react("✅");
+    (message.channel.send("Role removed."))
+          .then(msg => {
+            msg.delete(5000)
+            })
+          .catch();
+  }
+  else if (!message.member.roles.has(role.id)){
+    //add role
+    message.member.addRole(role.id)
+    message.react("✅");
+    (message.channel.send("Role added."))
+          .then(msg => {
+            msg.delete(5000)
+            })
+          .catch();
+  }
+  else {
+    message.react("5557385181552574470");
+    (message.channel.send("Something went wrong. Please try again in a moment."))
+          .then(msg => {
+            msg.delete(5000)
+            })
+          .catch();
+  }
+  return;
+}
 
-
-
+//normal chat triggers bot response
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) {
@@ -225,10 +257,22 @@ client.on("message", (message) => {
     } 
   }
   
+  // prefix chat triggers response
+  
   else if (message.content.startsWith(prefix)) {
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase()
   switch (command) {
+      
+  case "pingme":
+    //i'll work on optimising code next time forgive me
+    //checks if it's in the bot channel roles, if not it removes the chat itself and ends the command sequence without assigning a role.
+    if (message.channel.id != "488783896398266389"){
+      message.delete(1);
+      break;
+    }
+    checkUserRole("pingme",message);
+    break;
   case "unzips" :
     let unzip = args.join(' ');
     message.channel.send("uwu whats this?")
