@@ -88,27 +88,27 @@ setInterval(() => {
   const ffTime = new Date();
   if ( ffTime.getHours() === 4 && !ffLunch) {
     ffLunch = true;
-    client.channels.get("557380407780442122").send("Hewwo @pingme pwease remember to get your Omuricey lunchies!");
+    client.channels.get("557380407780442122").send("Hewwo <@&557375923633127427> pwease remember to get your Omuricey lunchies!");
   }
   if ( ffTime.getHours() === 10 && !ffDinner) {
     ffDinner = true;
-    client.channels.get("557380407780442122").send("Din-dins are served @pingme, don't forget to get your Garlic Lobsters owo");
+    client.channels.get("557380407780442122").send("Din-dins are served <@&557375923633127427>, don't forget to get your Garlic Lobsters owo");
   }
   if ( ffTime.getHours() === 13 && !ffSupper) {
     ffSupper = true;
-    client.channels.get("557380407780442122").send("Supper! @pingme uwu pwease remember to get your Mango Wrappies before they expire.");
+    client.channels.get("557380407780442122").send("Supper! <@&557375923633127427> uwu pwease remember to get your Mango Wrappies before they expire.");
   }
   if ( ffTime.getHours() === 17 && !ffPublic1) {
     ffPublic1 = true;
-    client.channels.get("557380407780442122").send("H-hewwo? @pingme Pubwic Orders are up uwu");
+    client.channels.get("557380407780442122").send("H-hewwo? <@&557375923633127427> Pubwic Orders are up uwu");
   }
   if ( ffTime.getHours() === 1 && !ffPublic2) {
     ffPublic2 = true;
-    client.channels.get("557380407780442122").send("H-hewwo? @pingme Pubwic Orders are up uwu");
+    client.channels.get("557380407780442122").send("H-hewwo? <@&557375923633127427> Pubwic Orders are up uwu");
   }
   if ( ffTime.getHours() === 5 && !ffPublic3) {
     ffPublic3 = true;
-    client.channels.get("557380407780442122").send("H-hewwo? @pingme Pubwic Orders are up uwu");
+    client.channels.get("557380407780442122").send("H-hewwo? <@&557375923633127427> Pubwic Orders are up uwu");
   }
   //resets the above at server reset time
   if ( ffTime.getHours() === 0) {
